@@ -1,9 +1,8 @@
-'use strcit'
-
-allEmployees = [];
-let forms = document.getElementById('form')
-let card = document.getElementById('cadDiv')
-let sectionEl = document.getElementById('cardSection')
+'use strict'
+let allEmployees = [];
+let forms = document.getElementById('form');
+let card = document.getElementById('cadDiv');
+let sectionEl = document.getElementById('cardSection');
 
 // constructor
 function Employee(id, name, department, level, image, salary) {
@@ -85,7 +84,7 @@ Employee.prototype.salary = function () {
 
 // create a new Event Listener
 
-forms = addEventListener('submit', handleSubmit)
+forms.addEventListener('submit', handleSubmit)
 
 function handleSubmit(event) {
   event.preventDefault();
