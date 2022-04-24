@@ -4,6 +4,7 @@ let forms = document.getElementById('form');
 let card = document.getElementById('cadDiv');
 let sectionEl = document.getElementById('cardSection');
 
+
 // constructor
 function Employee(id, name, department, level, image, salary) {
   this.employeeId = id;
@@ -13,13 +14,12 @@ function Employee(id, name, department, level, image, salary) {
   this.image = image;
   this.salary = salary;
   allEmployees.push(this);
-
 }
 
 Employee.prototype.render = function () {
-  let card = document.createElement('div')
-  card.classList = ('cardDiv')
-  sectionEl.appendChild(card)
+  let card = document.createElement('div');
+  card.classList = ('cardDiv');
+  sectionEl.appendChild(card);
   // create image for employee
   let imageEl = document.createElement('img');
   imageEl.classList = ('card-img-top');
@@ -36,9 +36,11 @@ Employee.prototype.render = function () {
   // create Department, Level, salary, Id for employee
   let paragraph = document.createElement('p');
   paragraph.classList = ('card-text');
-  paragraph.textContent = `ID: ${this.employeeId}  \n - Department: ${this.department} \n - Level: ${this.level} \n - salary: ${this.salary} JD`;
+  paragraph.textContent = `ID: ${this.employeeId} \n - Department: ${this.department} \n - Level: ${this.level} \n - salary: ${this.salary} JD`;
   card.appendChild(paragraph);
 };
+
+
 
 Employee.prototype.id = function () {
   return Math.floor(1000 + Math.random() * 9000);
@@ -58,14 +60,16 @@ let employee_7 = new Employee('1006', 'Hadi Ahmad', 'Finance', 'Mid-Senior', '..
 
 
 
-
-for (let i = 0; i < allEmployees.length; i++) {
-  allEmployees[i].render();
+function renderC() {
+  for (let i = 0; i < allEmployees.length; i++) {
+    allEmployees[i].render();
+  }
 }
-
 
 Employee.prototype.salary = function () {
   let net = 0;
+  let min = 0;
+  let max = 0;
   if (`${this.level}` === 'Senior') {
     min = 1500;
     max = 2000;
@@ -84,12 +88,11 @@ Employee.prototype.salary = function () {
 
 // create a new Event Listener
 
-forms.addEventListener('submit', handleSubmit)
+forms.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
 
-  console.log(event);
   let id = Employee.prototype.id();
   let fullName = event.target.floatingInput1.value;
   let department = event.target.floatingSelect1.value;
@@ -102,5 +105,30 @@ function handleSubmit(event) {
 
   newEmployee.render();
 
+  saveData(newEmployee);
+
 };
 
+function saveData(data) {
+  let stringfiyData;
+  let dataFromLocal = JSON.parse(localStorage.getItem('employeeItem'));
+  if (dataFromLocal != null) {
+    dataFromLocal.push(data);
+    stringfiyData = JSON.stringify(dataFromLocal);
+  } else {
+    stringfiyData = JSON.stringify([data]);
+
+  } localStorage.setItem('employeeItem', stringfiyData);
+};
+
+function getData() {
+  let retrievedData = localStorage.getItem('employeeItem');
+  let arrayData = JSON.parse(retrievedData);
+  if (arrayData != null) {
+    for (let i = 0; i < arrayData.length; i++) {
+      new Employee(arrayData[i].id, arrayData[i].fullName, arrayData[i].department, arrayData[i].level, arrayData[i].image, arrayData[i].salary);
+    }
+  }
+  renderC();
+}
+getData();

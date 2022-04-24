@@ -68,6 +68,11 @@ footer {
   align-items: center;
   justify-content: center;
 }
+
+#footerAcc {
+  bottom: 0;
+}
+
 i {
   margin: 5px 5px;
   color: #6ebf8b;
@@ -79,4 +84,8 @@ i:hover {
 #btn:active {
   color: #1c1f23;
   background-color: #ffffff;
+}
+
+.total {
+  border : 1px solid #1c1f23;
 }
